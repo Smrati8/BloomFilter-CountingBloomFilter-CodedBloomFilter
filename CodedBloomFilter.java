@@ -78,7 +78,7 @@ public class CodedBloomFilter {
                         numHashCount++;
                     }
                 }
-                if(numHashCount == numOfSets) {
+                if(numHashCount == s.length) {
                     sb.append(1);
                 } else {
                     sb.append(0);
