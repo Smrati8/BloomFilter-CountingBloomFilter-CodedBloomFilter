@@ -38,37 +38,53 @@ public class BloomFilter {
 
     //Driver Function for the program for two sets of Input Set A and Set B
     public int[] fillBloomFilter(){
-        return new int[] {encodeLookup(), encodeLookup()};
+        Map<Integer, int[]> parentMapA = new HashMap<>();
+        Map<Integer, int[]> parentMapB = new HashMap<>();
+        generateRandomElements(parentMapA);
+        encode(parentMapA);
+        int countA = lookup(parentMapA);
+        generateRandomElements(parentMapB);
+        int countB = lookup(parentMapB);
+        return new int[] {countA, countB};
     }
 
-    private int encodeLookup() {
-        Set<Integer> uniqueElements = new HashSet<>();
-        int count = 0;
-        for(int i = 0; i < numOfElements; i++) {
-            int element = 0;
-            while(true) {
-                element = random();
-                if(!uniqueElements.contains(element)) {
-                    uniqueElements.add(element);
-                    break;
-                }
-            }
-            int[] resultHash = generateHashFunction(element);
-
-            //Lookup if the number has not been encoded yet, number is unseen
-            for (int hash : resultHash) {
-                if (bitMap[hash % numOfBits] == 0) {
-                    count++;
-                    break;
-                }
-            }
-
-            //Encode all Bits to 1
+    //Encode all Bits of the seen value to 1
+    private void encode(Map<Integer, int[]> parentMap) {
+        for(Map.Entry<Integer, int[]> entry : parentMap.entrySet()) {
+            int[] resultHash = entry.getValue();
             for (int hash : resultHash) {
                 bitMap[hash % numOfBits] = 1;
             }
         }
-        return count;
+    }
+
+    //Check if the value exists in the table
+    private int lookup(Map<Integer, int[]> parentMap){
+        int count = 0;
+        for(Map.Entry<Integer, int[]> entry : parentMap.entrySet()) {
+            int[] resultHash = entry.getValue();
+            for(int hash : resultHash) {
+                if(bitMap[hash % numOfBits] == 0) {
+                    count++;
+                    break;
+                }
+            }
+        }
+        return numOfElements - count;
+    }
+
+    //Generating random values for A and B
+    private void generateRandomElements(Map<Integer, int[]> parentMap) {
+        for(int i = 0; i < numOfElements; i++) {
+            int element = 0;
+            do {
+                element = random();
+            }
+            while (parentMap.containsKey(element));
+
+            int[] resultHash = generateHashFunction(element);
+            parentMap.put(element, resultHash);
+        }
     }
 
     //Create the hash function
@@ -94,7 +110,6 @@ public class BloomFilter {
         FileOutputStream fos = new FileOutputStream(fout);
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
         int[] result = bf.fillBloomFilter();
-        System.out.println(Arrays.toString(result));
         for (int count : result) {
             bw.write(Integer.toString(count));
             bw.newLine();
