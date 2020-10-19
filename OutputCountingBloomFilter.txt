@@ -1,1 +1,1 @@
-503
+After lookup of elements in A the number of elements are: 504
