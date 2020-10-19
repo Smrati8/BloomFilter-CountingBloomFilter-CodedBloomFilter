@@ -188,11 +188,11 @@ It generates unique elements that need to be stored in the bloom filter.
 ### •	fillBloomFilter(): 
 This method is driver function of the program. It functions in following three steps: 
 
-*1) Firstly, it generates random number for all the sets that have been provided.*
+- *Firstly, it generates random number for all the sets that have been provided.*
 
-*2) Secondly, it encodes the bloom filter according to the binary code that is generated for the set. If the value in the string is 1 then bloom filter is filled otherwise it is not filled.*
+- *Secondly, it encodes the bloom filter according to the binary code that is generated for the set. If the value in the string is 1 then bloom filter is filled otherwise it is not filled.*
 
-*3) Lastly, it lookups the value of the random numbers that are generated and matches how many have their correct lookup found. This is done by matching the binary code.*
+- *Lastly, it lookups the value of the random numbers that are generated and matches how many have their correct lookup found. This is done by matching the binary code.*
 
 ### •	encode(): 
 This Encodes the values of set A values in the Bloom Filter. The values in counting bloom filter are filled counters, they are incrementing the values, denoting the element has been seen.
