@@ -40,10 +40,11 @@ public class BloomFilter {
     public int[] fillBloomFilter(){
         Map<Integer, int[]> parentMapA = new HashMap<>();
         Map<Integer, int[]> parentMapB = new HashMap<>();
-        generateRandomElements(parentMapA);
+        Set<Integer> globalSet = new HashSet<>();
+        generateRandomElements(parentMapA, globalSet);
         encode(parentMapA);
         int countA = lookup(parentMapA);
-        generateRandomElements(parentMapB);
+        generateRandomElements(parentMapB, globalSet);
         int countB = lookup(parentMapB);
         return new int[] {countA, countB};
     }
@@ -74,16 +75,17 @@ public class BloomFilter {
     }
 
     //Generating random values for A and B
-    private void generateRandomElements(Map<Integer, int[]> parentMap) {
+    private void generateRandomElements(Map<Integer, int[]> parentMap, Set<Integer> globalSet) {
         for(int i = 0; i < numOfElements; i++) {
             int element = 0;
             do {
                 element = random();
             }
-            while (parentMap.containsKey(element));
+            while (globalSet.contains(element));
 
             int[] resultHash = generateHashFunction(element);
             parentMap.put(element, resultHash);
+            globalSet.add(element);
         }
     }
 
@@ -110,10 +112,9 @@ public class BloomFilter {
         FileOutputStream fos = new FileOutputStream(fout);
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
         int[] result = bf.fillBloomFilter();
-        for (int count : result) {
-            bw.write(Integer.toString(count));
-            bw.newLine();
-        }
+        bw.write("After lookup of elements in A the number of elements are: " + Integer.toString(result[0]));
+        bw.newLine();
+        bw.write("After lookup of elements in B the number of elements are: " + Integer.toString(result[1]));
         bw.close();
     }
 }
