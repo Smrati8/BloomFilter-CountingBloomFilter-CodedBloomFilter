@@ -8,6 +8,7 @@ public class CodedBloomFilter {
     int numOfBits;
     int[] s;
     Map<Integer, int[]> codeMap = new HashMap<>();
+    int length = 0;
 
     CodedBloomFilter(int numOfSets, int numOfElements, int numOfFilters, int numofBits, int numOfHashes) {
         this.numOfSets = numOfSets;
@@ -20,9 +21,11 @@ public class CodedBloomFilter {
     }
 
     private void assignCode() {
-        codeMap.put(0,new int[numOfBits]);
-        codeMap.put(1,new int[numOfBits]);
-        codeMap.put(2,new int[numOfBits]);
+        this.length = (int)Math.ceil(Math.log(numOfSets+1) / Math.log(2));
+        for(int i = 0; i < length; i++) {
+            codeMap.put(i,new int[numOfBits]);
+        }
+        this.numOfFilters = length;
     }
 
     // Generate all the Unique Hash values
@@ -57,7 +60,7 @@ public class CodedBloomFilter {
         }
         Map<Integer, String> lookupCodeMap = new HashMap<>();
         for(int i = 0; i < list.size(); i++) {
-            String binary = String.format("%" + numOfFilters + "s", Integer.toBinaryString(i+1)).replaceAll(" ", "0");
+            String binary = String.format("%" + length + "s", Integer.toBinaryString(i+1)).replaceAll(" ", "0");
             for(int j = 0; j < binary.length(); j++) {
                 if(binary.charAt(j) == '1') {
                     encode(list.get(i), j, lookupCodeMap, binary);
@@ -142,7 +145,7 @@ public class CodedBloomFilter {
         File fout = new File("OutputCodedBloomFilter.txt");
         FileOutputStream fos = new FileOutputStream(fout);
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
-        bw.write(Integer.toString(cdbf.fillBloomFilter()));
+        bw.write("Number of elements whose lookup results are correct: " + Integer.toString(cdbf.fillBloomFilter()));
         bw.newLine();
         bw.close();
     }
