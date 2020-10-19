@@ -1,2 +1,2 @@
-1000
-7
+After lookup of elements in A the number of elements are: 1000
+After lookup of elements in B the number of elements are: 7
