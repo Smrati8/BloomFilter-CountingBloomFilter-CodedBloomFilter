@@ -40,7 +40,7 @@ public class CountingBloomFilter {
         return random.nextInt(Integer.MAX_VALUE - 1) + 1;
     }
 
-    //Driver Function for the program for two sets of Input Set A and Set B
+    //Driver Function for the program
     public int fillBloomFilter(){
         Map<Integer, int[]> parentMapA = new HashMap<>();
         Set<Integer> originalElement = new HashSet<>();
@@ -146,7 +146,7 @@ public class CountingBloomFilter {
         File fout = new File("OutputCountingBloomFilter.txt");
         FileOutputStream fos = new FileOutputStream(fout);
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
-        bw.write(Integer.toString(cbf.fillBloomFilter()));
+        bw.write("After lookup of elements in A the number of elements are: " + Integer.toString(cbf.fillBloomFilter()));
         bw.newLine();
         bw.close();
     }
