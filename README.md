@@ -34,7 +34,7 @@ In the project, I have implemented a Bloom filter, counting Bloom filter, and co
 •	Extract the files from the folder.
 
 
-•	They consist of three java files and three output files denoted to each hash table.
+•	They consist of three java files and three output files denoted to each Bloom Filter.
 
 
 •	Run the files using the system having Java Run time environment setup. 
@@ -76,19 +76,19 @@ This method is called by the constructor of the BloomFilter and assigns unique v
 
 ### •	random(): 
 This method uses the random class in java. According to the functionality I have assigned to the method it generates a random number between 1 to maximum integer value supported in java.
-### •	generateHashFunction(int flowID): 
-This method create the XOR values obtained and assigns for each flowID.
+### •	generateHashFunction(int element):  
+This method create the XOR values obtained and assigns for each element.
 
 ### •	fillBloomFilter(): 
 This method is driver function of the program. It calls a method to generate random number for set A and then encode them and then look them up in the bloom filter. Then it calls to generate random number for set B and look up them in the Bloom Filter. Then it returns the count of both sets elements found in the bloom filter.
 
-### •	generateRandomElements(): 
+### •	generateRandomElements(Map<Integer, int[]> parentMap,Set<Integer> globalSet):
 It generates unique elements that need to be stored in the bloom filter. 
 
-### •	encode(): 
+### •	encode(Map<Integer, int[]> parentMap): 
 This Encodes the values of set A values in the Bloom Filter. The values in bloom filter are filled with 1 denoting the element has been seen.
 
-### •	Lookup(): 
+### •	lookup(Map<Integer, int[]> parentMap): 
 Once the elements have been entered we check them if all the values are encoded as one for their hashes. We check for the false positives.
 
 
@@ -124,25 +124,25 @@ This method is called by the constructor of the CountingBloomFilter and assigns 
 ### •	random(): 
 This method uses the random class in java. According to the functionality I have assigned to the method it generates a random number between 1 to maximum integer value supported in java.
 
-### •	generateHashFunction(int flowID): 
-This method create the XOR values obtained and assigns for each flowID.
+### •	generateHashFunction(int element): 
+This method create the XOR values obtained and assigns for each element.
 
 ### •	fillBloomFilter(): 
 This method is driver function of the program. It calls a method to generate random number for set A and then encode them and then look them up in the coding bloom filter. Then it removed the elements from the Bloom Filter and then it adds another set of random numbers and encodes them. Then it lookups the count of the originally generated numbers.
 
-### •	removeElements():
+### •	removeElements(Map<Integer, int[]> parentMap): :
 This method removes the values Bloom Filter and decrements the counter of the seen values.
 
-### •	AddElements(): 
+### •	AddElements(Map<Integer, int[]> parentMap): 
 This method adds the set of random number and encodes them in the counting  bloom filter.
 
-### •	generateRandomElements(): 
+### •	generateRandomElements(Map<Integer, int[]> parentMap, Set<Integer> orignalElements): 
 It generates unique elements that need to be stored in the bloom filter. 
 
-### •	encode():
+### •	encode(Map<Integer, int[]> parentMap)
 This Encodes the values of set A values in the Bloom Filter. The values in counting bloom filter are filled counters, they are incrementing the values, denoting the element has been seen.
 
-### •	Lookup():
+### •	Lookup(Map<Integer, int[]> parentMap, Set<Integer> originalElement): 
 Once the elements have been entered we check them if all the values are encoded as one for their hashes. We check for the false positives.
 
 It generates the output file “OutputCountingBloomFilter.txt”. As per the project requirement, the first line consists of the elements when looked up for set A. 
@@ -179,10 +179,10 @@ This method is called by the constructor of the CodedBloomFilter and assigns uni
 ### •	random():
 This method uses the random class in java. According to the functionality I have assigned to the method it generates a random number between 1 to maximum integer value supported in java.
 
-### •	generateHashFunction(int flowID):
-This method create the XOR values obtained and assigns for each flowID.
+### •	generateHashFunction(int element):
+This method create the XOR values obtained and assigns for each element.
 
-### •	generateRandomElements(): 
+### •	generateRandomElements(Map<Integer, int[]> parentMap, Map<Integer, int[]> allElements): 
 It generates unique elements that need to be stored in the bloom filter. 
 
 ### •	fillBloomFilter(): 
@@ -194,7 +194,7 @@ This method is driver function of the program. It functions in following three s
 
 - *Lastly, it lookups the value of the random numbers that are generated and matches how many have their correct lookup found. This is done by matching the binary code.*
 
-### •	encode(): 
+### •	encode(Map<Integer, int[]> parentMap, int codeMapIndex, Map<Integer, String> lookupCodeMap, String binary):
 This Encodes the values of set A values in the Bloom Filter. The values in counting bloom filter are filled counters, they are incrementing the values, denoting the element has been seen.
 
 It generates the output file “OutputCodedBloomFilter.txt”. As per the project requirement, the first line consists of the elements when looked up for set A which are correct. The value is greater than 6700+ for set of 7000 elements.
